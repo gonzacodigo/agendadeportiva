@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Deportiva</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Agenda Deportiva del Día</h1>
+    <p id="cargando">Cargando...</p>
+  </header>
+
+  <!-- Contenedor de la agenda deportiva -->
+  <div id="agenda-deportiva" class="agenda-container"></div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
