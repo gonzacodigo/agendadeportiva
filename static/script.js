@@ -1,4 +1,4 @@
-const urlAgenda = "http://127.0.0.1:5000/agenda"; // Cambia a la URL correcta de tu endpoint
+const urlAgenda = "https://agendadeportiva.onrender.com/agenda"; // Cambia a la URL correcta de tu endpoint
 
 document.addEventListener("DOMContentLoaded", function() {
   obtenerAgenda();
