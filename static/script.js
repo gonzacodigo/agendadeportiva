@@ -25,15 +25,15 @@ function obtenerAgenda() {
     });
 }
 
-function mostrarAgenda(noticias) {
+function mostrarAgenda(eventos) {
   const agendaContenedor = document.getElementById("agenda-deportiva");
   agendaContenedor.innerHTML = "";
 
-  // Agrupar noticias por torneo
-  const agendaPorTorneo = noticias.reduce((acc, noticia) => {
-    const torneo = noticia.torneo || "Otros";
+  // Agrupar eventos por torneo
+  const agendaPorTorneo = eventos.reduce((acc, evento) => {
+    const torneo = evento.torneo || "Otros";
     if (!acc[torneo]) acc[torneo] = [];
-    acc[torneo].push(noticia);
+    acc[torneo].push(evento);
     return acc;
   }, {});
 
@@ -44,33 +44,34 @@ function mostrarAgenda(noticias) {
 
     const torneoTitulo = document.createElement("h2");
     torneoTitulo.textContent = torneo;
-    torneoTitulo.classList.add("torneo-titulo"); // Nueva clase para el título del torneo
+    torneoTitulo.classList.add("torneo-titulo");
     torneoDiv.appendChild(torneoTitulo);
 
-    // Ordenar por horario
-    agendaPorTorneo[torneo].sort((a, b) => (a.time > b.time ? 1 : -1));
-
+    // Mostrar eventos del torneo
     agendaPorTorneo[torneo].forEach(evento => {
-      const eventoDiv = document.createElement("div");
-      eventoDiv.classList.add("evento-card"); // Nueva clase para la tarjeta del evento
+      // Asumimos que los arrays `equipos`, `time` y `canales` tienen la misma longitud
+      for (let i = 0; i < evento.equipos.length; i++) {
+        const eventoDiv = document.createElement("div");
+        eventoDiv.classList.add("evento-card");
 
-      const equipos = document.createElement("p");
-      equipos.textContent = `${evento.equipos}`;
-      equipos.classList.add("evento-equipos"); // Nueva clase para equipos
+        const equipos = document.createElement("p");
+        equipos.textContent = `Equipos: ${evento.equipos[i]}`;
+        equipos.classList.add("evento-equipos");
 
-      const horario = document.createElement("p");
-      horario.textContent = `Hora: ${evento.time}`;
-      horario.classList.add("evento-horario"); // Nueva clase para el horario
+        const horario = document.createElement("p");
+        horario.textContent = `Hora: ${evento.time[i]}`;
+        horario.classList.add("evento-horario");
 
-      const canales = document.createElement("p");
-      canales.textContent = `Canales: ${evento.canales.join(", ")}`;
-      canales.classList.add("evento-canales"); // Nueva clase para canales
+        const canales = document.createElement("p");
+        canales.textContent = `Canales: ${evento.canales ? evento.canales.join(", ") : "N/A"}`;
+        canales.classList.add("evento-canales");
 
-      eventoDiv.appendChild(equipos);
-      eventoDiv.appendChild(horario);
-      eventoDiv.appendChild(canales);
+        eventoDiv.appendChild(equipos);
+        eventoDiv.appendChild(horario);
+        eventoDiv.appendChild(canales);
 
-      torneoDiv.appendChild(eventoDiv);
+        torneoDiv.appendChild(eventoDiv);
+      }
     });
 
     agendaContenedor.appendChild(torneoDiv);

@@ -43,27 +43,44 @@ def obtener_noticias_tn():
         return jsonify({'error': 'No se pudo obtener las noticias'}), 500
 
     soup = BeautifulSoup(response.text, 'html.parser')
-    noticias = soup.find_all('div', class_='sc-73748f61-3 eMRaBa')
+    noticias_div = soup.find('div', class_='sc-73748f61-0 ljxdIf')
 
-    resultado = []
+    # Verificar si `noticias_div` existe
+    if noticias_div:
+        noticias = noticias_div.find_all('div', class_='sc-73748f61-3 eMRaBa')
+        resultado = []
 
-    for noticia in noticias:
-        canales = []
-        torneo = noticia.find('h2', class_="sc-73748f61-4 hRQtTc")
-        equipos = noticia.find('h3', class_="event-name")
-        time_elem = noticia.find('div', class_="event-time")
-        
-        canal_names = noticia.find_all('span', class_="canal-name")
-        for canal_name in canal_names:
-            canales.append(canal_name.text.strip())
+        for noticia in noticias:  
+            equipos = []
+            time_elem = []
+            equipos_divs = noticia.find_all('div', class_="sc-73748f61-5 goTmuE")  # Lista de divs para equipos
+            times = noticia.find_all('div', class_="event-time")  # Lista de divs para equipos
+                        # Extraer el texto de cada equipo y agregarlo a la lista `equipos`
+            for time in times:
+                time_elem.append(time.text.strip())
+            
+            # Extraer el texto de cada equipo y agregarlo a la lista `equipos`
+            for equipo_div in equipos_divs:
+                equipo_nombre = equipo_div.find('h3', class_="event-name")
+                equipos.append(equipo_nombre.text.strip())
+            
+            canales = []
+            torneo = noticia.find('h2', class_="sc-73748f61-4 hRQtTc")
+            canal_names = noticia.find_all('span', class_="canal-name")
+            for canal_name in canal_names:
+                canales.append(canal_name.text.strip())
 
-        if torneo:
-            resultado.append({
-                'equipos': equipos.text.strip() if equipos else None,
-                'torneo': torneo.text.strip() if torneo else None,
-                'time': time_elem.text.strip() if time_elem else None,
-                'canales': canales if canales else None
-            })
+            if torneo:
+                resultado.append({
+                    'equipos': equipos,  # Lista de equipos extraída correctamente
+                    'torneo': torneo.text.strip() if torneo else None,
+                    'time': time_elem,
+                    'canales': canales if canales else None
+                })
+
+    else:
+        app.logger.error("No se encontró el contenedor `noticias_div` en la página.")
+
     
     CACHE = resultado
     CACHE_TIMESTAMP = tiempo.time()  # Actualiza la marca de tiempo del caché
