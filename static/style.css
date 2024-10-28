@@ -1,95 +1,126 @@
 /* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
-  }
-  
-  header {
-    text-align: center;
-    padding: 1.5rem;
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  #cargando {
-    color: #ff6347;
-    font-weight: bold;
-  }
-  
-  /* Contenedor principal */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
+
+header {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #8bc34a;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* Cargando */
+#cargando {
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Contenedor principal */
+.agenda-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Estilo de torneos */
+.torneo {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.torneo:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.torneo-titulo {
+  font-size: 1.6rem;
+  color: #4caf50;
+  border-bottom: 3px solid #ddd;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+/* Tarjetas de evento */
+.evento-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  background-color: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.evento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.evento-equipos {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.evento-horario {
+  font-size: 1rem;
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.evento-canales {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* Icono de evento destacado */
+.evento-destacado {
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+}
+
+/* Responsividad */
+@media (min-width: 600px) {
   .agenda-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    padding: 1rem;
-    max-width: 1000px;
-    margin: auto;
   }
-  
-  /* Estilo de torneos */
-  .torneo {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
+}
+
+@media (min-width: 900px) {
+  .agenda-container {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  .torneo-titulo {
-    font-size: 1.5rem;
-    color: #007bff;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  /* Tarjetas de evento */
-  .evento-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    transition: transform 0.2s ease;
-  }
-  
-  .evento-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .evento-equipos {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .evento-horario, .evento-canales {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  /* Responsividad */
-  @media (min-width: 600px) {
-    .agenda-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .agenda-container {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
+}
