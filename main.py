@@ -43,29 +43,32 @@ def obtener_noticias_tn():
         return jsonify({'error': 'No se pudo obtener las noticias'}), 500
 
     soup = BeautifulSoup(response.text, 'html.parser')
-    noticias_div = soup.find('div', class_='sc-73748f61-0 ljxdIf')
+    noticias_div = soup.find('div', class_='sc-1aaf288f-1 dBZArI')
+    
 
     # Verificar si `noticias_div` existe
     if noticias_div:
-        noticias = noticias_div.find_all('div', class_='sc-73748f61-3 eMRaBa')
+        noticias = noticias_div.find_all('div', class_='sc-db8a830b-3 iuexty')
         resultado = []
 
         for noticia in noticias:  
             equipos = []
             time_elem = []
-            equipos_divs = noticia.find_all('div', class_="sc-73748f61-5 goTmuE")  # Lista de divs para equipos
-            times = noticia.find_all('div', class_="event-time")  # Lista de divs para equipos
-                        # Extraer el texto de cada equipo y agregarlo a la lista `equipos`
-            for time in times:
-                time_elem.append(time.text.strip())
+            equipos_divs = noticia.find_all('div', class_="events")  # Lista de divs para equipos
+            
+                        
+
             
             # Extraer el texto de cada equipo y agregarlo a la lista `equipos`
             for equipo_div in equipos_divs:
+                times = equipo_div.find('div', class_="event-time")  # Lista de divs para equipos
+                time_elem.append(times.text.strip())
                 equipo_nombre = equipo_div.find('h3', class_="event-name")
-                equipos.append(equipo_nombre.text.strip())
+                equipos.append(equipo_nombre.text.strip())  # Extraer el texto de cada equipo y agregarlo a la lista `equipos`
             
             canales = []
-            torneo = noticia.find('h2', class_="sc-73748f61-4 hRQtTc")
+            torneo = noticia.find('h2', class_="sc-db8a830b-4 eiZrTA")
+            
             canal_names = noticia.find_all('span', class_="canal-name")
             for canal_name in canal_names:
                 canales.append(canal_name.text.strip())
